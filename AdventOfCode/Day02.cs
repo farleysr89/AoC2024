@@ -12,7 +12,7 @@ public class Day02 : BaseDay
 
     public override ValueTask<string> Solve_1()
     {
-        var safeReports = _lines.Select(line => line.Split(" ", StringSplitOptions.RemoveEmptyEntries).Select(int.Parse)).Count(splitted => TestSafe(splitted));
+        var safeReports = _lines.Select(line => line.Split(" ", StringSplitOptions.RemoveEmptyEntries).Select(int.Parse)).Count(TestSafe);
         return new ValueTask<string>($"Solution to {ClassPrefix} {CalculateIndex()}, part 1 is " + safeReports);
     }
 
