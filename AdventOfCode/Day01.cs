@@ -1,6 +1,6 @@
 ﻿namespace AdventOfCode;
 
-public class Day01 : BaseDay
+public sealed class Day01 : BaseDay
 {
     private readonly List<int> _list1 = [];
     private readonly List<int> _list2 = [];
@@ -11,7 +11,7 @@ public class Day01 : BaseDay
         var lines = input.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
         foreach (var l in lines)
         {
-            var entries = l.Split(" ", StringSplitOptions.RemoveEmptyEntries).Select(i => int.Parse(i)).ToArray();
+            var entries = l.Split(" ", StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToArray();
             _list1.Add(entries[0]);
             _list2.Add(entries[1]);
         }
