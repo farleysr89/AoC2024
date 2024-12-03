@@ -22,7 +22,7 @@ public sealed class Day03 : BaseDay
             var currIndex = index + 4;
             while (true)
             {
-                if (int.TryParse(_input[currIndex].ToString(),out var currNum))
+                if (int.TryParse(_input[currIndex].ToString(),out _))
                 {
                     if (!firstFound) firstNum += _input[currIndex];
                     else secondNum += _input[currIndex];
@@ -67,7 +67,7 @@ public sealed class Day03 : BaseDay
             var currIndex = index + 4;
             while (true)
             {
-                if (int.TryParse(_input[currIndex].ToString(),out var currNum))
+                if (int.TryParse(_input[currIndex].ToString(),out _))
                 {
                     if (!firstFound) firstNum += _input[currIndex];
                     else secondNum += _input[currIndex];
