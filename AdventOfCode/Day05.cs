@@ -46,7 +46,6 @@ public sealed class Day05 : BaseDay
     public override ValueTask<string> Solve_2()
     {
         var count = 0;
-        var fixedUpdates = 0;
         var rules = new List<(int, int)>();
         var puzzle = _input.Split('\n');
         var badUpdates = new List<int[]>();
@@ -76,11 +75,11 @@ public sealed class Day05 : BaseDay
             }
         }
 
-        foreach(var badUpdate in badUpdates) fixedUpdates += Reorder(rules, badUpdate);
+        var fixedUpdates = badUpdates.Sum(badUpdate => Reorder(rules, badUpdate));
         return new ValueTask<string>($"Solution to {ClassPrefix} {CalculateIndex()}, part 2 is " + fixedUpdates);
     }
 
-    public int Reorder(List<(int, int)> rules, int[] report)
+    private static int Reorder(List<(int, int)> rules, int[] report)
     {
         while (true)
         {
