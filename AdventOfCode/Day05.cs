@@ -31,11 +31,9 @@ public sealed class Day05 : BaseDay
             {
                 for (var j = i + 1; j < pages.Length; j++)
                 {
-                    if (rules.Any(r => r.Item1 == pages[j] && r.Item2 == pages[i]))
-                    {
-                        good = false;
-                        break;
-                    }
+                    if (!rules.Any(r => r.Item1 == pages[j] && r.Item2 == pages[i])) continue;
+                    good = false;
+                    break;
                 }
                 if(!good) break;
             }
@@ -48,9 +46,10 @@ public sealed class Day05 : BaseDay
     public override ValueTask<string> Solve_2()
     {
         var count = 0;
-        var validUpdates = 0;
+        var fixedUpdates = 0;
         var rules = new List<(int, int)>();
         var puzzle = _input.Split('\n');
+        var badUpdates = new List<int[]>();
         foreach (var line in puzzle)
         {
             count++;
@@ -67,18 +66,42 @@ public sealed class Day05 : BaseDay
             {
                 for (var j = i + 1; j < pages.Length; j++)
                 {
-                    if (rules.Any(r => r.Item1 == pages[j] && r.Item2 == pages[i]))
-                    {
-                        good = false;
-                        break;
-                    }
+                    if (!rules.Any(r => r.Item1 == pages[j] && r.Item2 == pages[i])) continue;
+                    badUpdates.Add(pages);
+                    good = false;
+                    break;
                 }
-                if(!good) break;
+
+                if (!good) break;
             }
-            if(good) validUpdates+=(pages[(pages.Length / 2)]);
         }
 
-        return new ValueTask<string>($"Solution to {ClassPrefix} {CalculateIndex()}, part 2 is " + validUpdates);
+        foreach(var badUpdate in badUpdates) fixedUpdates += Reorder(rules, badUpdate);
+        return new ValueTask<string>($"Solution to {ClassPrefix} {CalculateIndex()}, part 2 is " + fixedUpdates);
+    }
+
+    public int Reorder(List<(int, int)> rules, int[] report)
+    {
+        while (true)
+        {
+            var change = false;
+            for (var i = 0; i < report.Length - 1; i++)
+            {
+                for (var j = i + 1; j < report.Length; j++)
+                {
+                    var rule = rules.FirstOrDefault(r => r.Item1 == report[j] && r.Item2 == report[i]);
+                    if (rule == default) continue;
+                    change = true;
+                    report[i] = rule.Item1;
+                    report[j] = rule.Item2;
+                    break;
+                }
+                if(change) break;
+            }
+            if(!change) break;
+        }
+
+        return report[report.Length / 2];
     }
 
 }
