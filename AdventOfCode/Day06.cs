@@ -11,8 +11,6 @@ public sealed class Day06 : BaseDay
 
     public override ValueTask<string> Solve_1()
     {
-        var count = 0;
-        var validUpdates = 0;
         var loc = (0,0);
         var dir = ' ';
         var map = _input.Split('\n');
@@ -112,32 +110,34 @@ public sealed class Day06 : BaseDay
 
     public override ValueTask<string> Solve_2()
     {
-        var count = 0;
-        return new ValueTask<string>($"Solution to {ClassPrefix} {CalculateIndex()}, part 2 is " + count);
-    }
-
-    private static int Reorder(List<(int, int)> rules, int[] report)
-    {
-        while (true)
+        var loc = (0,0);
+        var dir = ' ';
+        var map = _input.Split('\n');
+        var path = new bool[map.Length][];
+        for (var i = 0; i < path.Length; i++)
         {
-            var change = false;
-            for (var i = 0; i < report.Length - 1; i++)
+            path[i] = new bool[map[0].Length];
+        }
+        var x = 0;
+        foreach (var line in map)
+        {
+            var y = 0;
+            foreach(var c in line)
             {
-                for (var j = i + 1; j < report.Length; j++)
+                if(c is '^' or '<' or '>' or 'v')
                 {
-                    var rule = rules.FirstOrDefault(r => r.Item1 == report[j] && r.Item2 == report[i]);
-                    if (rule == default) continue;
-                    change = true;
-                    report[i] = rule.Item1;
-                    report[j] = rule.Item2;
+                    loc = (x, y);
+                    dir = c;
                     break;
                 }
-                if(change) break;
-            }
-            if(!change) break;
-        }
 
-        return report[report.Length / 2];
+                y++;
+            }
+
+            if (dir != ' ') break;
+            x++;
+        }
+        return new ValueTask<string>($"Solution to {ClassPrefix} {CalculateIndex()}, part 2 is " + 0);
     }
 
 }
