@@ -4,7 +4,7 @@ public sealed class Day06 : BaseDay
 {
     private readonly string _input;
     private bool[][] _path;
-    private List<(int,int)> _steps = [];
+    private readonly List<(int,int)> _steps = [];
 
     public Day06()
     {
